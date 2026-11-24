@@ -15,11 +15,7 @@ from qdrant_client.models import (
     FieldCondition,
     MatchValue,
 )
-from qdrant_client.models import (
-    Distance,
-    PointStruct,
-    VectorParams,
-)
+
 
 from src.models import Chunk
 
@@ -141,6 +137,7 @@ def search_chunks(
     department: str | None = None,
     access_tier: str | None = None,
     file_type: str | None = None,
+    document_date: str | None = None,
 ) -> list[dict[str, Any]]:
 
     if len(query_vector) != VECTOR_SIZE:
@@ -192,7 +189,13 @@ def search_chunks(
                 match=MatchValue(value=file_type)
             )
         )
-
+    if document_date is not None:
+        conditions.append(
+            FieldCondition(
+                key="date",
+                match=MatchValue(value=document_date)
+            )
+        )
     # Create a Qdrant filter only when conditions exist
     query_filter = Filter(must=conditions) if conditions else None
 

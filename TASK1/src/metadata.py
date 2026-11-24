@@ -1,4 +1,4 @@
-
+from datetime import date
 from pathlib import Path
 
 from src.models import (
@@ -14,6 +14,7 @@ def enrich_metadata(
     client_id: str | None = None,
     department: str | None = None,
     access_tier: AccessTier | None = None,
+    document_date: date | None = None,
     ingestion_status: IngestionStatus | None = None,
 ) -> ExtractedDocument:
 
@@ -28,7 +29,8 @@ def enrich_metadata(
 
     if access_tier is not None:
         document.access_tier = access_tier
-
+    if document_date is not None:
+        document.document_date = document_date
     if ingestion_status is not None:
         document.ingestion_status = ingestion_status
 
@@ -46,6 +48,11 @@ def enrich_metadata(
         "client_id": document.client_id,
         "department": document.department,
         "access_tier": document.access_tier,
+        "date": (
+            document.document_date.isoformat()
+            if document.document_date is not None
+            else None
+        ),
         "ingestion_status": document.ingestion_status,
     })
 

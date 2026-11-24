@@ -79,6 +79,16 @@ def chunk_document(
                 chunk_index=index,
                 metadata={
                     **document.metadata,
+                    "client_id": document.client_id,
+                    "department": document.department,
+                    "access_tier": document.access_tier,
+                    "date": (
+                        document.document_date.isoformat()
+                        if document.document_date is not None
+                        else None
+                    ),
+                    "ingestion_status": document.ingestion_status,
+                    "extracted_at": document.extracted_at.isoformat(),
                     "chunk_index": index,
                 },
             )

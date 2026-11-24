@@ -1,5 +1,4 @@
-
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -33,6 +32,7 @@ class ExtractedDocument(BaseModel):
     client_id: str | None = None
     department: str | None = None
     access_tier: AccessTier | None = None
+    document_date: date | None = None
     ingestion_status: IngestionStatus = "pending"
 
     # Extraction timestamp

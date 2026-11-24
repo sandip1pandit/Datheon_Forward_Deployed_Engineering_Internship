@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-
+from datetime import date
 from dotenv import load_dotenv
 
 from src.chunking import chunk_document
@@ -18,7 +18,7 @@ load_dotenv()
 ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "data" / "raw"
 PROCESSED_DIR = ROOT / "data" / "processed"
-
+METADATA_PATH = ROOT / "data" / "metadata.json"
 
 def run(
     raw_dir: Path = RAW_DIR,
@@ -34,7 +34,9 @@ def run(
     )
 
     files = iter_raw_files(raw_dir)
-
+    metadata_manifest = json.loads(
+        METADATA_PATH.read_text(encoding="utf-8")
+    )
     summary = {
         "files": 0,
         "chunks": 0,
@@ -47,8 +49,20 @@ def run(
     for file_path in files:
 
         try:
+            file_metadata = metadata_manifest.get(file_path.name, {})
+
+            document_date = (
+                date.fromisoformat(file_metadata["date"])
+                if file_metadata.get("date")
+                else None
+            )
+
             document = enrich_metadata(
-                extract_file(file_path)
+                extract_file(file_path),
+                client_id=file_metadata.get("client_id"),
+                department=file_metadata.get("department"),
+                access_tier=file_metadata.get("access_tier"),
+                document_date=document_date,
             )
 
             chunks = chunk_document(document)

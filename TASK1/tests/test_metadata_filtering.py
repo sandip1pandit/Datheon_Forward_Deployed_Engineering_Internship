@@ -17,6 +17,7 @@ def test_metadata_filtering():
                 "client_id": "client_001",
                 "department": "operations",
                 "access_tier": "internal",
+                "date": "2026-11-20",
             }
         ),
         Chunk(
@@ -29,6 +30,7 @@ def test_metadata_filtering():
                 "client_id": "client_002",
                 "department": "operations",
                 "access_tier": "internal",
+                "date": "2026-11-20",
             }
         ),
         Chunk(
@@ -41,6 +43,7 @@ def test_metadata_filtering():
                 "client_id": "client_001",
                 "department": "finance",
                 "access_tier": "confidential",
+                "date": "2026-11-15",
             }
         ),
     ]
@@ -90,3 +93,22 @@ def test_metadata_filtering():
     print("Client:", results[0]["client_id"])
     print("Department:", results[0]["department"])
     print("Access tier:", results[0]["access_tier"])
+def test_document_date_filtering():
+
+    query_vector = [0.1] * 384
+
+    results = search_chunks(
+        query_vector=query_vector,
+        limit=5,
+        persist_dir="data/test_filter_vector_db",
+        collection_name="filter_test_documents",
+        document_date="2026-11-20",
+    )
+
+    assert len(results) == 2
+
+    for result in results:
+        assert result["date"] == "2026-11-20"
+
+    print("\nDocument date filtering test passed!")
+    print("Matching documents:", len(results))

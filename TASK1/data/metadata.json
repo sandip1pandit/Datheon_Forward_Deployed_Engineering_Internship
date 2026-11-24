@@ -1,0 +1,14 @@
+{
+    "sample.csv": {
+      "client_id": "client_001",
+      "department": "operations",
+      "access_tier": "internal",
+      "date": "2026-11-20"
+    },
+    "sample.md": {
+      "client_id": "client_001",
+      "department": "engineering",
+      "access_tier": "confidential",
+      "date": "2026-11-15"
+    }
+  }
