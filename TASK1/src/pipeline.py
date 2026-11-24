@@ -57,6 +57,7 @@ def run(
 
             _write_processed(
                 processed_dir,
+                raw_dir,
                 file_path,
                 document.text,
                 chunks,
@@ -124,24 +125,36 @@ def run(
 
 def _write_processed(
     processed_dir: Path,
+    raw_dir: Path,
     file_path: Path,
     text: str,
     chunks,
 ) -> None:
 
+    # Preserve the source directory structure.
+    relative_path = file_path.relative_to(raw_dir)
+    output_dir = processed_dir / relative_path.parent
+
+    output_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
     stem = file_path.stem
 
-    (processed_dir / f"{stem}.txt").write_text(
+    # Save extracted text.
+    (output_dir / f"{stem}.txt").write_text(
         text,
         encoding="utf-8",
     )
 
+    # Save chunks with metadata.
     chunk_payload = [
         chunk.model_dump()
         for chunk in chunks
     ]
 
-    (processed_dir / f"{stem}.chunks.json").write_text(
+    (output_dir / f"{stem}.chunks.json").write_text(
         json.dumps(
             chunk_payload,
             indent=2,
@@ -149,7 +162,6 @@ def _write_processed(
         ),
         encoding="utf-8",
     )
-
 
 def main() -> None:
 

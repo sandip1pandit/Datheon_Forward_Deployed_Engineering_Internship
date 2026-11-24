@@ -1,5 +1,10 @@
 from pathlib import Path
-
+from src.extractors import (
+    extract_csv,
+    extract_file,
+    extract_markdown,
+    extract_pdf,
+)
 from src.chunking import chunk_document
 from src.extractors import extract_csv, extract_file, extract_markdown
 from src.metadata import enrich_metadata
@@ -21,6 +26,15 @@ def test_extract_markdown_keeps_headings():
     assert document.file_type == "markdown"
     assert "Legacy plant notes" in document.text
 
+def test_extract_pdf_includes_page_text_and_count():
+    pdf_path = ROOT / "tests" / "fixtures" / "test_sample.pdf"
+
+    document = extract_pdf(pdf_path)
+
+    assert document.file_type == "pdf"
+    assert document.metadata["page_count"] == 2
+    assert "PDF extraction test page one" in document.text
+    assert "PDF extraction test page two" in document.text
 
 def test_extract_file_routes_by_extension():
     document = extract_file(CSV_PATH)
