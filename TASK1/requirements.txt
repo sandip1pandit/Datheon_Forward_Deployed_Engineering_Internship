@@ -1,0 +1,7 @@
+pydantic
+python-dotenv
+pypdf
+sentence-transformers
+langchain-text-splitters
+qdrant-client
+pytest

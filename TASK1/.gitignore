@@ -1,0 +1,42 @@
+
+# API keys and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+
+# Generated processed data
+data/processed/*
+!data/processed/.gitkeep
+
+# Vector databases
+data/vector_db/
+data/benchmark_vector_db/
+data/test_vector_db/
+data/test_filter_vector_db/
+
+# Benchmark-generated data
+data/benchmark_processed/
+data/benchmark_processed_*/
+benchmarks/benchmark_report.json
+benchmarks/batch_comparison.json
+
+# Cursor IDE
+.cursor/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+data/benchmark_processed/

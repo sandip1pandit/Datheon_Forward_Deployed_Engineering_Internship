@@ -1,0 +1,4 @@
+record_id,plant,status,notes
+1,Acme Corp,active,Legacy invoice system still in use
+2,North Mill,retired,Paper logs scanned in 2019
+3,Harbor Yard,active,Shift reports stored as PDF
