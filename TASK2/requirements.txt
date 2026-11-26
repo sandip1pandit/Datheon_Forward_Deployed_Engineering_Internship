@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+qdrant-client
+sentence-transformers
+pydantic
+pydantic-settings
+python-dotenv
+PyJWT
+pwdlib[argon2]
+groq
+pypdf
+python-multipart
+pytest
+httpx

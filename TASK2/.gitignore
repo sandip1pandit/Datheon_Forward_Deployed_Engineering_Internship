@@ -1,0 +1,26 @@
+# Virtual environment
+.venv/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Local vector database
+data/qdrant/
+
+# Generated uploaded documents
+data/raw/
