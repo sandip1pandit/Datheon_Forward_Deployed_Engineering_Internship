@@ -1,0 +1,9 @@
+
+fastapi
+uvicorn[standard]
+groq
+python-dotenv
+pydantic
+prometheus-client
+httpx
+pytest
